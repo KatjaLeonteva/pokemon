@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchDashboardData } from "../services/api";
 import DataTable from './DataTable';
+import Card from './Card';
+import SupertypesChart from './SupertypesChart.tsx';
+import TypesChart from "./TypesChart.tsx";
 
 function Dashboard() {
   const [data, setData] = useState<any>([]);
@@ -13,7 +16,7 @@ function Dashboard() {
     });
   }, []);
 
-  
+
 
   return (
     <div className='container m-auto'>
@@ -27,7 +30,24 @@ function Dashboard() {
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <DataTable data={data} />
+            <>
+                <div className="grid grid-cols-3 gap-4 mb-4">
+                    <Card>
+                        <div className="text-sm">Cards by supertype</div>
+                        <SupertypesChart/>
+                    </Card>
+                    <Card>
+                        <div className="text-sm">Pokémon cards by type</div>
+                        <TypesChart />
+                    </Card>
+                    <Card>
+                        Lorem ipsum
+                    </Card>
+                </div>
+                <Card>
+                    <DataTable data={data} />
+                </Card>
+            </>
         )}
       </main>
     </div>

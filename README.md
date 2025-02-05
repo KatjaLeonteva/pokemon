@@ -47,7 +47,6 @@ The app will be available at http://localhost:5173/
 /src
 │── /assets          # Local JSON data, images
 │── /components      # UI components (Charts, Tables, Cards)
-│── /charts          # ECharts components
 │── /services        # API calls & data fetching logic
 │── /styles          # Global styles (Tailwind)
 │── App.tsx          # Main App Component
