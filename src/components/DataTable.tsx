@@ -1,6 +1,6 @@
 function DataTable({data}: any) {
    return (
-    <div className="max-h-full overflow-y-auto">
+    <div>
     <table className="min-w-full table-auto">
         <thead>
             <tr>

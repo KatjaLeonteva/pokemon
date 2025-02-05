@@ -1,50 +1,72 @@
-# React + TypeScript + Vite
+# Ash’s Pokémon Card Collection Assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The dahsboard is aimed to help Ash to explore and understand his Pokémon card collection. 
 
-Currently, two official plugins are available:
+## Tech
+- **React + TypeScript + Vite** → provides a fast, minimal, and type-safe setup. React for component-based UI development. TypeScript for type safety and better code maintainability. Vite for fast builds, HMR (Hot Module Replacement), and an optimized ESM-based dev server.
+- **Tailwind CSS** → a utility-first CSS framework that makes styling faster and more maintainable. Enables responsive, reusable, and modern UI styling without writing custom CSS files. Treeshaking removes unused styles, reducing final bundle size.
+- **Echarts** → a data visualization library. Supports interactive charts with smooth animations. Optimized for large datasets, making it ideal for dashboard analytics. Works well with React to dynamically update charts based on data.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Setup instructions
 
-## Expanding the ESLint configuration
+### Open the Dashboard
+To see the deployed project please visit:  
+🔗 [Live demo](https://github.com/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### To run project locally
 
-- Configure the top-level `parserOptions` property like this:
+Before starting, ensure you have installed Node.js and npm.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Clone the repository
+```
+git clone <repository-url>
+cd <project-folder>
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+2. Install dependencies
 ```
+npm install
+```
+
+3a. Start the development server
+```
+npm run dev
+```
+
+3b. Or generate an optimized production build and run it on a local server
+```
+npm run build
+npm run preview
+```
+
+The app will be available at http://localhost:5173/  
+*(Port may vary depending on system availability)*
+
+### Project structure
+```
+/src
+│── /assets          # Local JSON data, images
+│── /components      # UI components (Charts, Tables, Cards)
+│── /charts          # ECharts components
+│── /services        # API calls & data fetching logic
+│── /styles          # Global styles (Tailwind)
+│── App.tsx          # Main App Component
+│── main.tsx         # Entry point
+│── vite.config.ts   # Vite Configuration
+```
+## Approach and trade-offs
+
+### Navigating the dashboard
+📊 Summary → See key statistics.  
+📈 Charts → Interactive charts display important metrics.  
+📑 Table → Browse detailed view of the collection with sorting and filtering options.  
+
+### Approach
+Lorem ipsum
+
+### Trade-offs
+Lorem ipsum
+
+## Unimplemented features
+- Lorem ipsum
+- Lorem ipsum
