@@ -1,4 +1,19 @@
+import { useEffect, useState } from "react";
+import { fetchDashboardData } from "../services/api";
+import DataTable from './DataTable';
+
 function Dashboard() {
+  const [data, setData] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchDashboardData().then((res) => {
+      setData(res);
+      setLoading(false);
+    });
+  }, []);
+
+  
 
   return (
     <div className='container m-auto'>
@@ -8,7 +23,13 @@ function Dashboard() {
           <img className="w-10 h-10 rounded-full" src="src/assets/ash-avatar.jpg" alt="Rounded avatar" />
         </a>
       </header>
-      <main className="p-4">Lorem ipsum</main>
+      <main className="p-4">
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <DataTable data={data} />
+        )}
+      </main>
     </div>
   )
 }
