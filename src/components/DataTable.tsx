@@ -1,4 +1,12 @@
-function DataTable({data}: any) {
+import { Card } from "../services/types.ts";
+
+const legalitiesAbbr: Record<string, string> = {
+    standard: "STD",
+    expanded: "EXP",
+    unlimited: "UNL",
+};
+
+function DataTable({cards}: {cards: Card[]}) {
    return (
     <table className="min-w-full table-auto">
         <thead>
@@ -9,24 +17,26 @@ function DataTable({data}: any) {
             <th>Subtypes</th>
             <th>Set</th>
             <th>Rarity</th>
-            <th>Standard</th>
-            <th>Expanded</th>
-            <th>Unlimited</th>
+            <th>{legalitiesAbbr.standard}</th>
+            <th>{legalitiesAbbr.expanded}</th>
+            <th>{legalitiesAbbr.unlimited}</th>
+            <th>Count</th>
         </tr>
         </thead>
         <tbody>
             {
-                data.map((item: any) => (
-                    <tr className="odd:bg-gray-100">
-                        <td>{item.name}</td>
-                        <td>{item.types?.join(", ")}</td>
-                        <td>{item.supertype}</td>
-                        <td>{item.subtypes?.join(", ")}</td>
-                        <td>{item.setInfo?.name}</td>
-                        <td>{item.rarity}</td>
-                        <td>{item.legalities?.standard}</td>
-                        <td>{item.legalities?.expanded}</td>
-                        <td>{item.legalities?.unlimited}</td>
+                cards.map((card: Card) => (
+                    <tr className="odd:bg-gray-100" key={card.id}>
+                        <td>{card.name}</td>
+                        <td>{card.types?.join(", ")}</td>
+                        <td>{card.supertype}</td>
+                        <td>{card.subtypes?.join(", ")}</td>
+                        <td><img src={card.setInfo?.images.symbol} alt={card.setInfo?.name} className="inline-block w-4"/> {card.setInfo?.name}</td>
+                        <td>{card.rarity}</td>
+                        <td>{card.legalities?.standard}</td>
+                        <td>{card.legalities?.expanded}</td>
+                        <td>{card.legalities?.unlimited}</td>
+                        <td className="text-right">{card.count}</td>
                     </tr>
                 ))
             }

@@ -1,5 +1,6 @@
 export interface Card {
     id: string;
+    count: number;
     name: string;
     supertype: string;
     subtypes: string[];
@@ -27,7 +28,8 @@ export interface Card {
         small: string;
         large: string;
     };
-    set?: SetInfo;
+    setId: string;
+    setInfo?: SetInfo | null;
 }
 
 export interface AncientTrait  {

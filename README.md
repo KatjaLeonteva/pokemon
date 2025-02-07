@@ -60,7 +60,7 @@ Therefore, the primary use cases likely are 1 and 2.
 For this purpose the best type of dashboard is analytical, meaning it is important to see the big picture while also have the ability to explore detailed insights.
 
 The dashboard includes following sections:  
-📊 Summary → High-level statistics such as total number of cards, duplicates, sets completeness.  
+📊 Summary → High-level statistics such as total number of cards, duplicates, sets count.  
 📈 Charts → Visual breakdown of collection across different attributes.  
 📅 Table → A detailed sortable, filterable view of cards for in-depth analysis.  
 🔎 Detailed card view → Show full card information on hover or click on the table row.
@@ -93,7 +93,7 @@ The project follows a modular structure, with components, services, and styles s
 
 1. Get local data (`ash_collection.json`), show loading indicator while data is being retrieved.
 2. Fetch external data (Pokémon TCG API) o enrich local data (e.g., adding sets information). Merge external data with local data before rendering UI.
-3. Compute derived values for charts and tables such as duplicates, set completeness, etc.
+3. Compute derived values for charts and tables such as duplicates, set count, etc.
 4. Update charts and tables based on user interactions (filters, selections).
 5. State management is handled by React hooks `useState` and `useEffect`. No external state management (Redux, Zustand, etc.) is used as project complexity is low.
 6. Filtered and processed data is computed in the parent component `Dashboard.tsx` and passed down as props to child components. Calculation logic is kept in separate utility functions to keep components clean.
@@ -101,7 +101,8 @@ The project follows a modular structure, with components, services, and styles s
 ### Trade-offs
 - Chart readability: more advanced charts (e.g. treemaps, scatterplots) provide deeper insights but may be harder to interpret for casual users.
 - Static vs. dynamic data: the dataset is enriched with set data from an external API during initial load. This increases startup time, and an alternative would be asynchronous loading, where charts update progressively. This would improve initial responsiveness but might introduce a loading state for charts.
-
+- There is no single API endpoint that gives the total number of all existing Pokémon TCG cards. Since Pokémon TCG does not change frequently, I decided to hardcode `globalTotalCards` value based on the latest API data to save time on loading.
+- 
 ## Unimplemented features
 ### Product features
 - Deck recommendations: suggest optimal decks based on available cards, considering playstyle preferences such as Aggro (fast attackers), Control (disruptive strategies), Spread Damage (multi-target attacks), and Tank/Stall (high-HP survival decks).
