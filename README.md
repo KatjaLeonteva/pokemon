@@ -55,17 +55,51 @@ The app will be available at http://localhost:5173/
 ```
 ## Approach and trade-offs
 
-### Navigating the dashboard
-📊 Summary → See key statistics.  
-📈 Charts → Interactive charts display important metrics.  
-📑 Table → Browse detailed view of the collection with sorting and filtering options.  
+### Goals
+A dashboard analyzing Ash's card collection can be useful for multiple purposes depending on what insights we extract from the data.
+Possible use cases are:
+1. Building different types of decks: know which card are available and how they fit into a deck strategy  (e.g. type balance, synergy).
+2. Identifying strong cards for competitive play: if Ash wants to play in tournaments he needs to know which cards are powerful and legal.
+3. Collection progress and set completion: if Ash is collecting full sets he needs to know which cards are missing.
+4. Deciding which cards to sell or replace: some cards increase in value and others are not useful for current deck strategy.
 
-### Approach
-Lorem ipsum
+The assignment does not explicitly state Ash’s goal, but it mentions that he participates in Pokémon card trials.
+I assume this means he is actively using his collection for gameplay rather than just collecting for value.
+Therefore, the primary use cases likely are 1 and 2.
+
+### Navigating the dashboard
+For this purpose the best type of dashboard is analytical, meaning it is important to see the big picture while also have the ability to explore detailed insights.
+
+The dashboard includes following sections:  
+📊 Summary → High-level statistics such as total number of cards, duplicates, sets completeness.  
+📈 Charts → Visual breakdown of collection across different attributes.  
+📅 Table → A detailed sortable, filterable view of cards for in-depth analysis.  
+🔎 Detailed card view → Show full card information on hover or click on the table row.
+⏳ Interactions → Apply filters to narrow down the dataset, enable cross-filtering where selections in table dynamically adjust other visualizations.
+
+### Choice of charts
+
+| Insights                                                                                          | Chart type                       |
+|---------------------------------------------------------------------------------------------------|----------------------------------|
+| Understand the collection’s composition (how many Pokémon, Trainer, and Energy cards)             | Bar chart with drilldown         |
+| Check card distribution across different sets (which sets are most represented in the collection) | Treemap                          |
+| Identify the strongest cards (HP, Damage, Abilities) vs support vs energy                         | Scatterplot (HP vs Attack power) |
+| Legality for tournament play (rule formats) and card rarity                                       | Table with filtering             |
 
 ### Trade-offs
-Lorem ipsum
+- Chart readability: more advanced charts (e.g. treemaps, scatterplots) provide deeper insights but may be harder to interpret for casual users.
+- Static vs. dynamic data: the dataset is enriched with set data from an external API during initial load. This increases startup time, and an alternative would be asynchronous loading, where charts update progressively. This would improve initial responsiveness but might introduce a loading state for charts.
 
 ## Unimplemented features
-- Lorem ipsum
-- Lorem ipsum
+### Product features
+- Deck recommendations: suggest optimal decks based on available cards, considering playstyle preferences such as Aggro (fast attackers), Control (disruptive strategies), Spread Damage (multi-target attacks), and Tank/Stall (high-HP survival decks).
+E.g. filter collection by archetype, recommend missing cards, etc.
+- Card price tracking: show card values over time (requires external data source), suggest which duplicates are worth selling.
+- Evolution tracking: identify which cards can evolve into or from others, helping with deck-building and collection progress.
+
+### Technical features
+- Card search: allow filtering by name, type, HP, rarity, and legality
+- Responsive design: optimize for mobile and tablet screens to improve usability.
+- Accessibility: improve keyboard navigation and screen reader support.
+- Error handling: display user-friendly messages for failed API calls.
+
