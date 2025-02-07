@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { fetchDashboardData } from "../services/api";
+import { useEffect, useState } from 'react';
+import { fetchDashboardData } from '../services/api';
 import DataTable from './DataTable';
+import Summary from './Summary';
 import Card from './Card';
 import SupertypesChart from './SupertypesChart.tsx';
 import TypesChart from "./TypesChart.tsx";
@@ -31,6 +32,7 @@ function Dashboard() {
           <p>Loading...</p>
         ) : (
             <>
+                <Summary data={data} />
                 <div className="grid grid-cols-3 gap-4 mb-4">
                     <Card>
                         <div className="text-sm">Cards by supertype</div>

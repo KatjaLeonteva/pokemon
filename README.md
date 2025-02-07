@@ -42,17 +42,6 @@ npm run preview
 The app will be available at http://localhost:5173/  
 *(Port may vary depending on system availability)*
 
-### Project structure
-```
-/src
-│── /assets          # Local JSON data, images
-│── /components      # UI components (Charts, Tables, Cards)
-│── /services        # API calls & data fetching logic
-│── /styles          # Global styles (Tailwind)
-│── App.tsx          # Main App Component
-│── main.tsx         # Entry point
-│── vite.config.ts   # Vite Configuration
-```
 ## Approach and trade-offs
 
 ### Goals
@@ -85,6 +74,29 @@ The dashboard includes following sections:
 | Check card distribution across different sets (which sets are most represented in the collection) | Treemap                          |
 | Identify the strongest cards (HP, Damage, Abilities) vs support vs energy                         | Scatterplot (HP vs Attack power) |
 | Legality for tournament play (rule formats) and card rarity                                       | Table with filtering             |
+
+
+### Project structure
+Currently, the project is a single-page application with a single route.
+The project follows a modular structure, with components, services, and styles separated for better organization and maintainability.
+
+```
+/src
+│── /assets          # Local JSON data, images
+│── /components      # UI components (Charts, Tables, Cards)
+│── /services        # API calls, external data fetching and processing
+│── /styles          # Global styles (Tailwind)
+│── App.tsx          # Main App Component
+│── main.tsx         # Entry point
+│── vite.config.ts   # Vite Configuration
+```
+
+1. Get local data (`ash_collection.json`), show loading indicator while data is being retrieved.
+2. Fetch external data (Pokémon TCG API) o enrich local data (e.g., adding sets information). Merge external data with local data before rendering UI.
+3. Compute derived values for charts and tables such as duplicates, set completeness, etc.
+4. Update charts and tables based on user interactions (filters, selections).
+5. State management is handled by React hooks `useState` and `useEffect`. No external state management (Redux, Zustand, etc.) is used as project complexity is low.
+6. Filtered and processed data is computed in the parent component `Dashboard.tsx` and passed down as props to child components. Calculation logic is kept in separate utility functions to keep components clean.
 
 ### Trade-offs
 - Chart readability: more advanced charts (e.g. treemaps, scatterplots) provide deeper insights but may be harder to interpret for casual users.
