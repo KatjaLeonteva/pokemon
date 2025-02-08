@@ -1,26 +1,46 @@
 import { useEffect, useState } from 'react';
 import { fetchDashboardData } from '../services/api';
+import { getSetsCount } from '../services/utils.ts';
+
 import DataTable from './DataTable';
 import Summary from './Summary';
+import FilterBar from './FilterBar';
 import DashboardCard from './DashboardCard';
 import Spinner from "./Spinner";
-import SupertypesChart from './SupertypesChart';
-import { Card } from '../services/types.ts';
+import BarChart from './BarChart';
+import Treemap from './Treemap';
+import { Card, SetInfo } from '../services/types.ts';
 
 function Dashboard() {
-  const [data, setData] = useState<{ cards: Card[] | [], globalTotalSets: number | null }>({
+  const [data, setData] = useState<{ cards: Card[] | [], globalSets: SetInfo[] | [] }>({
       cards: [],
-      globalTotalSets: null,
+      globalSets: [],
   });
   const [loading, setLoading] = useState(true);
+
+  const [filters, setFilters] = useState({
+      energyType: 'All',
+      rarity: 'All',
+      legality: 'All'
+  });
+
+  const handleFilterChange = (key: string, value: string) => {
+      setFilters((prev) => ({ ...prev, [key]: value }));
+  };
 
   useEffect(() => {
     fetchDashboardData().then((res) => {
         setData(res);
-        console.log(data)
         setLoading(false);
     });
   }, []);
+
+  const filteredCards = data.cards.filter((card) => (
+     (filters.energyType === "All" || card.types?.includes(filters.energyType)) &&
+     (filters.rarity === 'All' || card.rarity?.includes(filters.rarity)) &&
+     (filters.legality === "All" || card.legalities?.[filters.legality as keyof typeof card.legalities] === "Legal")
+  ));
+
 
   return (
     <div className='h-screen flex flex-col container mx-auto'>
@@ -42,33 +62,46 @@ function Dashboard() {
         <div className="flex flex-1 overflow-hidden">
 
 
-            <aside className="w-1/5 p-4 -ml-4">
-                <DashboardCard className="h-full">
-                    <Summary cards={data.cards} globalTotalSets={data.globalTotalSets}/>
+            <aside className="w-1/5 p-4 -ml-4 flex">
+                <DashboardCard className="flex flex-col h-full gap-8">
+                    <Summary cards={data.cards}/>
+                    <FilterBar filters={filters} onChange={handleFilterChange}/>
+
+                    <footer className="w-full mt-auto text-xs text-gray-500">
+                        <p>
+                            Source <a href="https://docs.pokemontcg.io/" className="text-blue-500 hover:underline">Pokémon
+                            TCG API</a>
+                        </p>
+                        <p>Created by <a href="https://github.com/KatjaLeonteva/pokemon"
+                                         className="text-blue-500 hover:underline">Ekaterina Leonteva</a></p>
+                        <p>Last updated: {new Date().toLocaleDateString()}</p>
+                    </footer>
                 </DashboardCard>
             </aside>
-                    <main className="flex-1 p-4 -mx-4 overflow-y-auto">
+            <main className="flex-1 p-4 -mx-4 overflow-y-auto">
                 <div className="grid grid-rows-2 gap-4 h-full">
                     {/* Row 1: Charts */}
                     <div className="grid grid-cols-3 gap-4">
                         <DashboardCard title="Cards by supertype">
                             <p className="text-xs text-gray-400">Click on category to drilldown</p>
-                            <SupertypesChart cards={data.cards} />
+                            <BarChart cards={filteredCards} />
                         </DashboardCard>
-                        <DashboardCard title="Cards by set">
-                            Lorem ipsum
+                        <DashboardCard title="Top 10 sets">
+                            <p className="text-xs text-gray-400">Total sets owned {getSetsCount(data.cards)} of {data.globalSets.length}</p>
+                            <Treemap cards={data.cards} globalSets={data.globalSets}/>
                         </DashboardCard>
                         <DashboardCard title="Strongest cards">
-                            Lorem ipsum
+                        Lorem ipsum
                         </DashboardCard>
                     </div>
 
                     {/* Row 2: Table */}
-                    <DashboardCard className="row-span-1 flex-1 overflow-auto">
-                        <DataTable cards={data.cards}/>
+                    <DashboardCard className="row-span-1 flex-1 overflow-auto" title="Collection details">
+                        <p className="text-xs text-gray-400">Showing {filteredCards.length} unique cards of total {data.cards.length}</p>
+                        <DataTable cards={filteredCards}/>
                     </DashboardCard>
                 </div>
-            </main>
+                    </main>
 
         </div>
             </>

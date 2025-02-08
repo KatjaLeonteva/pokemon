@@ -4,24 +4,19 @@ import * as echarts from "echarts";
 import { generateDrilldownData } from "../services/utils.ts";
 import { Card } from "../services/types.ts";
 
-// Based on example https://echarts.apache.org/examples/en/editor.html?c=bar-drilldown
-function SupertypesChart({cards}: {cards: Card[]}) {
+/*
+ * This component displays a bar chart using ECharts. Based on examples:
+ * - https://echarts.apache.org/examples/en/editor.html?c=bar-drilldown
+ * - https://echarts.apache.org/examples/en/editor.html?c=data-transform-sort-bar
+ */
+function BarChart({cards}: {cards: Card[]}) {
     const chartRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!chartRef.current) return;
 
-        // Initialize ECharts
-        const myChart = echarts.init(chartRef.current);
+        const myChart = echarts.init(chartRef.current, "vintage");
         const chartData = generateDrilldownData(cards);
-        console.log(chartData)
-
-        /*
-        const sortedData = chartData.topLevelData.sort((a, b) => b.value - a.value);
-        const sortedCategories = sortedData.map((item) => item.groupId);
-        const sortedValues = sortedData.map((item) => item.value);
-
-         */
 
         const option = {
             dataset: [
@@ -85,15 +80,12 @@ function SupertypesChart({cards}: {cards: Card[]}) {
 
 
         myChart.on("click", function (event) {
-            console.log('event', event)
             if (event.data) {
                 const subData = chartData.drilldownData.find((data) => data.dataGroupId === event.name);
 
                 if (!subData || subData.data.length == 1) {
                     return;
                 }
-
-                console.log(subData)
 
                 myChart.setOption({
                     dataset: [
@@ -144,9 +136,9 @@ function SupertypesChart({cards}: {cards: Card[]}) {
         return () => {
             myChart.dispose();
         };
-    }, []);
+    }, [cards]);
 
     return <div ref={chartRef} className="w-full h-64" />;
 }
 
-export default SupertypesChart
+export default BarChart

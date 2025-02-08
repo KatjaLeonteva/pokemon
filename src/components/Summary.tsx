@@ -1,16 +1,14 @@
 import { Card } from "../services/types.ts";
-import { getTotalCardCount, getSetsCount } from "../services/utils.ts";
+import { getTotalCardCount } from "../services/utils.ts";
 
 interface SummaryProps {
     cards: Card[];
-    globalTotalSets: number | null;
 }
 
-function Summary({cards, globalTotalSets}: SummaryProps) {
+function Summary({cards}: SummaryProps) {
     const globalTotalCards = 18686;
     const totalCards = getTotalCardCount(cards);
     const duplicatesRate = (((totalCards - cards.length) / totalCards) * 100).toFixed(0);
-    const totalSets = getSetsCount(cards);
 
     return (
         <div className="flex flex-col gap-4">
@@ -23,11 +21,6 @@ function Summary({cards, globalTotalSets}: SummaryProps) {
                 <h2 className="font-semibold">Unique cards</h2>
                 <p className="text-2xl font-bold">{cards.length}</p>
                 <p className="text-sm">Duplicates rate {duplicatesRate}%</p>
-            </div>
-            <div>
-                <h2 className="font-semibold">Sets owned</h2>
-                <p className="text-2xl font-bold">{totalSets}</p>
-                <p className="text-sm">Total sets {globalTotalSets}</p>
             </div>
         </div>
     )

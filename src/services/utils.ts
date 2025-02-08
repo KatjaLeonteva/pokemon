@@ -10,13 +10,25 @@ interface DrilldownData {
     data: [string, number][];
 }
 
-
 export function getTotalCardCount(cards: Card[]): number {
     return cards.reduce((sum, card) => sum + card.count, 0);
 }
 
 export function getSetsCount(cards: Card[]): number {
     return new Set(cards.map((card) => card.setId)).size;
+}
+
+export function countCardsBySet(cards: Card[]): { name: string; value: number }[] {
+    const setCounts = new Map<string, number>();
+
+    for (const card of cards) {
+        const name = card.setId || "Unknown";
+        const count = card.count;
+
+        setCounts.set(name, (setCounts.get(name) || 0) + count);
+    }
+
+    return [...setCounts.entries()].map(([name, value]) => ({ name, value }));
 }
 
 export function generateDrilldownData(cards: Card[]): {

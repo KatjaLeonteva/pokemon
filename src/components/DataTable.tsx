@@ -8,7 +8,7 @@ const legalitiesAbbr: Record<string, string> = {
 
 function DataTable({cards}: {cards: Card[]}) {
    return (
-    <table className="min-w-full table-auto">
+    <table className="w-full">
         <thead>
         <tr>
             <th>Name</th>
@@ -31,7 +31,8 @@ function DataTable({cards}: {cards: Card[]}) {
                         <td>{card.types?.join(", ")}</td>
                         <td>{card.supertype}</td>
                         <td>{card.subtypes?.join(", ")}</td>
-                        <td><img src={card.setInfo?.images.symbol} alt={card.setInfo?.name} className="inline-block w-4"/> {card.setInfo?.name}</td>
+                        <td><img src={card.setInfo?.images.symbol} alt={card.setInfo?.name}
+                                 className="inline-block w-4"/> {card.setInfo?.name}</td>
                         <td>{card.rarity}</td>
                         <td>{card.legalities?.standard}</td>
                         <td>{card.legalities?.expanded}</td>
@@ -41,6 +42,7 @@ function DataTable({cards}: {cards: Card[]}) {
                 ))
             }
         </tbody>
+
     </table>
    )
 }

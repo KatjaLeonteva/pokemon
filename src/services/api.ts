@@ -10,15 +10,13 @@ export async function fetchDashboardData() {
         const apiResponse = await fetch('https://api.pokemontcg.io/v2/sets');
         const apiData = await apiResponse.json();
 
-        const globalTotalSets = apiData.data.length;
-
         // Merge local collection with API set data
         let data = mergeData(localData, apiData.data);
         data = removeDuplicates(data);
-        return { cards: data, globalTotalSets };
+        return { cards: data, globalSets: apiData.data };
     } catch (error) {
         console.error('Error fetching data:', error)
-        return { cards: [], globalTotalSets: null };
+        return { cards: [], globalSets: [] };
     }
 }
 
