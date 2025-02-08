@@ -24,9 +24,22 @@ function SupertypesChart({cards}: {cards: Card[]}) {
          */
 
         const option = {
+            dataset: [
+                {
+                    id: 'mainDataset',
+                    source: chartData.topLevelData
+                },
+                {
+                    id: 'sortedDataset',
+                    fromDatasetId: "mainDataset",
+                    transform: {
+                        type: "sort",
+                        config: { dimension: "value", order: "asc" }
+                    }
+                }
+            ],
             yAxis: {
                 type: 'category',
-                data: chartData.topLevelData.map((item) => item.groupId),
                 axisTick: {
                     show: false
                 }
@@ -46,7 +59,8 @@ function SupertypesChart({cards}: {cards: Card[]}) {
                 {
                     type: 'bar',
                     id: "cards",
-                    data: chartData.topLevelData,
+                    datasetId: "sortedDataset",
+                    encode: { x: "value", y: "groupId" },
                     universalTransition: { enabled: true, divideShape: "clone" },
                     label: {
                         show: true,
@@ -82,17 +96,26 @@ function SupertypesChart({cards}: {cards: Card[]}) {
                 console.log(subData)
 
                 myChart.setOption({
+                    dataset: [
+                        { id: 'drilldownDataset', source: subData.data },
+                        {
+                            id: "sortedDrilldownDataset",
+                            fromDatasetId: "drilldownDataset",
+                            transform: {
+                                type: "sort",
+                                config: { dimension: 1, order: "asc" }
+                            }
+                        }
+                    ],
                     yAxis: {
-                        type: 'category',
-                        data: subData.data.map((item) => item[0]),
+                        type: 'category'
                     },
                     series: {
                         type: 'bar',
                         id: 'cards',
                         dataGroupId: subData.dataGroupId,
-                        data: subData.data.map(function (item) {
-                            return item[1];
-                        }),
+                        datasetId: "sortedDrilldownDataset",
+                        encode: { x: 1, y: 0 },
                         universalTransition: {
                             enabled: true,
                             divideShape: 'clone'
