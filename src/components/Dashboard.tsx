@@ -5,7 +5,6 @@ import Summary from './Summary';
 import DashboardCard from './DashboardCard';
 import Spinner from "./Spinner";
 import SupertypesChart from './SupertypesChart';
-import TypesChart from "./TypesChart";
 import { Card } from '../services/types.ts';
 
 function Dashboard() {
@@ -18,11 +17,10 @@ function Dashboard() {
   useEffect(() => {
     fetchDashboardData().then((res) => {
         setData(res);
+        console.log(data)
         setLoading(false);
     });
   }, []);
-
-
 
   return (
     <div className='h-screen flex flex-col container mx-auto'>
@@ -35,8 +33,9 @@ function Dashboard() {
         <header className="w-full p-4 shadow-md">
             <div className="flex justify-between items-center">
                 <h1 className="text-xl">Pokémon Card Collection</h1>
-                <a href="/">
-                    <img className="w-10 h-10 rounded-full" src="src/assets/ash-avatar.jpg" alt="Rounded avatar"/>
+                <a href="/" className="flex items-center gap-1">
+                    <img className="w-6 h-6 rounded-full" src="src/assets/ash-avatar.jpg" alt="Rounded avatar"/>
+                    Ash Ketchum
                 </a>
             </div>
         </header>
@@ -53,10 +52,11 @@ function Dashboard() {
                     {/* Row 1: Charts */}
                     <div className="grid grid-cols-3 gap-4">
                         <DashboardCard title="Cards by supertype">
-                            <SupertypesChart/>
+                            <p className="text-xs text-gray-400">Click on category to drilldown</p>
+                            <SupertypesChart cards={data.cards} />
                         </DashboardCard>
-                        <DashboardCard title="Pokémon cards by type">
-                            <TypesChart/>
+                        <DashboardCard title="Cards by set">
+                            Lorem ipsum
                         </DashboardCard>
                         <DashboardCard title="Strongest cards">
                             Lorem ipsum

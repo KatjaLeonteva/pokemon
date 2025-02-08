@@ -102,7 +102,8 @@ The project follows a modular structure, with components, services, and styles s
 - Chart readability: more advanced charts (e.g. treemaps, scatterplots) provide deeper insights but may be harder to interpret for casual users.
 - Static vs. dynamic data: the dataset is enriched with set data from an external API during initial load. This increases startup time, and an alternative would be asynchronous loading, where charts update progressively. This would improve initial responsiveness but might introduce a loading state for charts.
 - There is no single API endpoint that gives the total number of all existing Pokémon TCG cards. Since Pokémon TCG does not change frequently, I decided to hardcode `globalTotalCards` value based on the latest API data to save time on loading.
-- 
+- Chart components combine business logic and presentation. If project complexity grows it
+
 ## Unimplemented features
 ### Product features
 - Deck recommendations: suggest optimal decks based on available cards, considering playstyle preferences such as Aggro (fast attackers), Control (disruptive strategies), Spread Damage (multi-target attacks), and Tank/Stall (high-HP survival decks).
