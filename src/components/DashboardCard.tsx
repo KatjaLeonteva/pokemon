@@ -9,8 +9,8 @@ interface DashboardCardProps {
 function DashboardCard({ children, className, title }: DashboardCardProps) {
 
     return (
-        <div className={`p-4 bg-white shadow ${className}`}>
-            {title && <div>{title}</div>}
+        <div className={`p-4 bg-white ${className}`}>
+            {title && <div>{title.toUpperCase()}</div>}
             {children}
         </div>
     );

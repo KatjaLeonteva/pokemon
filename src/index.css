@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 th {
-    @apply bg-gray-200 text-left px-1 py-0.5 font-semibold text-sm;
+    @apply bg-gray-200 text-left px-2 py-1 font-semibold text-sm;
 }
 
 td {
-    @apply px-1 py-0.5 text-sm;
+    @apply px-2 py-1 text-sm;
 }
 

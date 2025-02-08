@@ -3,8 +3,8 @@ function FilterBar({ filters, onChange }: { filters: any; onChange: (key: string
     return (
         <div className="flex flex-col space-y-4">
             <div>
-                <label htmlFor="">Energy</label>
-                <select className="w-full border border-gray-400 rounded-sm p-1" value={filters.energyType}
+                <label htmlFor="" className="inline-block pb-1">Energy</label>
+                <select className="w-full border border-gray-400 rounded-sm p-2 text-sm" value={filters.energyType}
                         onChange={(e) => onChange("energyType", e.target.value)}>
                     <option value="All">All types</option>
                     <option value="Colorless">Colorless</option>
@@ -21,8 +21,8 @@ function FilterBar({ filters, onChange }: { filters: any; onChange: (key: string
                 </select>
             </div>
             <div>
-                <label htmlFor="">Rarity</label>
-                <select className="w-full border border-gray-400 rounded-sm p-2" value={filters.rarity}
+                <label htmlFor="" className="inline-block pb-1">Rarity</label>
+                <select className="w-full border border-gray-400 rounded-sm p-2 text-sm" value={filters.rarity}
                         onChange={(e) => onChange("rarity", e.target.value)}>
                     <option value="All">All rarities</option>
                     <option value="Common">Common</option>
@@ -31,8 +31,8 @@ function FilterBar({ filters, onChange }: { filters: any; onChange: (key: string
                 </select>
             </div>
             <div>
-                <label htmlFor="">Legalities</label>
-                <select className="w-full border border-gray-400 rounded-sm p-2" value={filters.legality}
+                <label htmlFor="" className="inline-block pb-1">Legalities</label>
+                <select className="w-full border border-gray-400 rounded-sm p-2 text-sm" value={filters.legality}
                         onChange={(e) => onChange("legality", e.target.value)}>
                     <option value="All">All legalities</option>
                     <option value="standard">Standard</option>

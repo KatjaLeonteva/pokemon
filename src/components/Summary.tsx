@@ -13,14 +13,12 @@ function Summary({cards}: SummaryProps) {
     return (
         <div className="flex flex-col gap-4">
             <div>
-                <h2 className="font-semibold">Cards owned</h2>
-                <p className="text-2xl font-bold">{totalCards}</p>
-                <p className="text-sm">Total cards {globalTotalCards}</p>
+                <p><span className="text-3xl font-bold">{totalCards}</span> cards owned</p>
+                <p className="text-sm text-gray-600">Total cards {globalTotalCards}</p>
             </div>
             <div>
-                <h2 className="font-semibold">Unique cards</h2>
-                <p className="text-2xl font-bold">{cards.length}</p>
-                <p className="text-sm">Duplicates rate {duplicatesRate}%</p>
+                <p><span className="text-3xl font-bold">{cards.length}</span> unique cards</p>
+                <p className="text-sm text-gray-600">Duplicates rate {duplicatesRate}%</p>
             </div>
         </div>
     )

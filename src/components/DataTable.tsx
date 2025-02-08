@@ -8,7 +8,7 @@ const legalitiesAbbr: Record<string, string> = {
 
 function DataTable({cards}: {cards: Card[]}) {
    return (
-    <table className="w-full">
+    <table className="w-full mt-4">
         <thead>
         <tr>
             <th>Name</th>

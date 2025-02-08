@@ -43,26 +43,25 @@ function Dashboard() {
 
 
   return (
-    <div className='h-screen flex flex-col container mx-auto'>
+    <div className='h-screen flex flex-col font-mono px-4 pb-4 container mx-auto'>
         {loading ? (
             <div className="flex-1 flex items-center justify-center w-full">
                 <Spinner />
             </div>
         ) : (
             <>
-        <header className="w-full p-4 shadow-md">
+        <header className="w-full py-4">
             <div className="flex justify-between items-center">
-                <h1 className="text-xl">Pokémon Card Collection</h1>
+                <h1 className="text-xl flex items-end"><img src="src/assets/logo.svg" alt="Pokémon" className="h-10 mr-2" /> Card Collection</h1>
                 <a href="/" className="flex items-center gap-1">
                     <img className="w-6 h-6 rounded-full" src="src/assets/ash-avatar.jpg" alt="Rounded avatar"/>
                     Ash Ketchum
                 </a>
             </div>
         </header>
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex overflow-hidden gap-4">
 
-
-            <aside className="w-1/5 p-4 -ml-4 flex">
+            <aside className="flex">
                 <DashboardCard className="flex flex-col h-full gap-8">
                     <Summary cards={data.cards}/>
                     <FilterBar filters={filters} onChange={handleFilterChange}/>
@@ -78,16 +77,16 @@ function Dashboard() {
                     </footer>
                 </DashboardCard>
             </aside>
-            <main className="flex-1 p-4 -mx-4 overflow-y-auto">
+            <main className="flex-1 overflow-y-auto">
                 <div className="grid grid-rows-2 gap-4 h-full">
                     {/* Row 1: Charts */}
                     <div className="grid grid-cols-3 gap-4">
                         <DashboardCard title="Cards by supertype">
-                            <p className="text-xs text-gray-400">Click on category to drilldown</p>
+                            <p className="text-sm text-gray-600">Click on category to drilldown</p>
                             <BarChart cards={filteredCards} />
                         </DashboardCard>
                         <DashboardCard title="Top 10 sets">
-                            <p className="text-xs text-gray-400">Total sets owned {getSetsCount(data.cards)} of {data.globalSets.length}</p>
+                            <p className="text-sm text-gray-600">Total sets owned {getSetsCount(data.cards)} of {data.globalSets.length}</p>
                             <Treemap cards={data.cards} globalSets={data.globalSets}/>
                         </DashboardCard>
                         <DashboardCard title="Strongest cards">
@@ -97,7 +96,7 @@ function Dashboard() {
 
                     {/* Row 2: Table */}
                     <DashboardCard className="row-span-1 flex-1 overflow-auto" title="Collection details">
-                        <p className="text-xs text-gray-400">Showing {filteredCards.length} unique cards of total {data.cards.length}</p>
+                        <p className="text-sm text-gray-600">Showing {filteredCards.length} unique cards of total {data.cards.length}</p>
                         <DataTable cards={filteredCards}/>
                     </DashboardCard>
                 </div>

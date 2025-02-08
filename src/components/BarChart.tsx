@@ -119,8 +119,9 @@ function BarChart({cards}: {cards: Card[]}) {
                             left: 0,
                             top: 8,
                             style: {
-                                text: 'Back',
-                                fontSize: 10
+                                text: '← Back',
+                                fontSize: 10,
+                                fill: '#2b7fff'
                             },
                             onclick: function () {
                                 myChart.setOption(option);
