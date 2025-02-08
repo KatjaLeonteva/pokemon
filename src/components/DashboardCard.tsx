@@ -9,7 +9,7 @@ interface DashboardCardProps {
 function DashboardCard({ children, className, title }: DashboardCardProps) {
 
     return (
-        <div className={`p-4 bg-white ${className}`}>
+        <div className={`p-4 bg-orange-50 ${className}`}>
             {title && <div>{title.toUpperCase()}</div>}
             {children}
         </div>

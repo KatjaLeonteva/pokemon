@@ -9,13 +9,13 @@ import { Card } from "../services/types.ts";
  * - https://echarts.apache.org/examples/en/editor.html?c=bar-drilldown
  * - https://echarts.apache.org/examples/en/editor.html?c=data-transform-sort-bar
  */
-function BarChart({cards}: {cards: Card[]}) {
+function BarChart({cards, theme}: {cards: Card[]; theme?: string | null}) {
     const chartRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!chartRef.current) return;
 
-        const myChart = echarts.init(chartRef.current, "vintage");
+        const myChart = echarts.init(chartRef.current, theme);
         const chartData = generateDrilldownData(cards);
 
         const option = {
@@ -37,7 +37,13 @@ function BarChart({cards}: {cards: Card[]}) {
                 type: 'category',
                 axisTick: {
                     show: false
-                }
+                },
+                axisLabel: {
+                    color: '#4a5565'
+                },
+                splitLine: {
+                    show: false
+                },
             },
             xAxis: {
                 type: 'value',
@@ -47,7 +53,7 @@ function BarChart({cards}: {cards: Card[]}) {
                 left: "2%",
                 right: "10%",
                 top: "10%",
-                bottom: "0%",
+                bottom: "-5%",
                 containLabel: true
             },
             series: [
@@ -139,7 +145,7 @@ function BarChart({cards}: {cards: Card[]}) {
         };
     }, [cards]);
 
-    return <div ref={chartRef} className="w-full h-64" />;
+    return <div ref={chartRef} className="w-full h-[240px]" />;
 }
 
 export default BarChart

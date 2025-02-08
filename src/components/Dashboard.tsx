@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchDashboardData } from '../services/api';
 import { getSetsCount } from '../services/utils.ts';
+import * as echarts from 'echarts';
 
 import DataTable from './DataTable';
 import Summary from './Summary';
@@ -9,6 +10,8 @@ import DashboardCard from './DashboardCard';
 import Spinner from "./Spinner";
 import BarChart from './BarChart';
 import Treemap from './Treemap';
+import Scatterplot from './Scatterplot';
+
 import { Card, SetInfo } from '../services/types.ts';
 
 function Dashboard() {
@@ -17,7 +20,7 @@ function Dashboard() {
       globalSets: [],
   });
   const [loading, setLoading] = useState(true);
-
+  const [theme, setTheme] = useState<string | null>(null);
   const [filters, setFilters] = useState({
       energyType: 'All',
       rarity: 'All',
@@ -33,6 +36,14 @@ function Dashboard() {
         setData(res);
         setLoading(false);
     });
+
+    // Fetch & register echarts theme
+    fetch('src/assets/essos.json')
+        .then(response => response.json())
+        .then(themeJson => {
+            echarts.registerTheme("essos", themeJson);
+            setTheme("essos");
+        });
   }, []);
 
   const filteredCards = data.cards.filter((card) => (
@@ -50,9 +61,9 @@ function Dashboard() {
             </div>
         ) : (
             <>
-        <header className="w-full py-4">
+        <header className="w-full py-4 text-white">
             <div className="flex justify-between items-center">
-                <h1 className="text-xl flex items-end"><img src="src/assets/logo.svg" alt="Pokémon" className="h-10 mr-2" /> Card Collection</h1>
+                <h1 className="text-xl font-bold flex items-end"><img src="src/assets/logo.svg" alt="Pokémon" className="h-10 mr-2" /> Card Collection</h1>
                 <a href="/" className="flex items-center gap-1">
                     <img className="w-6 h-6 rounded-full" src="src/assets/ash-avatar.jpg" alt="Rounded avatar"/>
                     Ash Ketchum
@@ -68,10 +79,10 @@ function Dashboard() {
 
                     <footer className="w-full mt-auto text-xs text-gray-500">
                         <p>
-                            Source <a href="https://docs.pokemontcg.io/" className="text-blue-500 hover:underline">Pokémon
+                            Source <a href="https://docs.pokemontcg.io/" target="_blank" className="text-blue-500 hover:underline">Pokémon
                             TCG API</a>
                         </p>
-                        <p>Created by <a href="https://github.com/KatjaLeonteva/pokemon"
+                        <p>Created by <a href="https://github.com/KatjaLeonteva/pokemon" target="_blank"
                                          className="text-blue-500 hover:underline">Ekaterina Leonteva</a></p>
                         <p>Last updated: {new Date().toLocaleDateString()}</p>
                     </footer>
@@ -80,17 +91,17 @@ function Dashboard() {
             <main className="flex-1 overflow-y-auto">
                 <div className="grid grid-rows-2 gap-4 h-full">
                     {/* Row 1: Charts */}
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-4 gap-4">
                         <DashboardCard title="Cards by supertype">
                             <p className="text-sm text-gray-600">Click on category to drilldown</p>
-                            <BarChart cards={filteredCards} />
+                            <BarChart cards={filteredCards} theme={theme} />
                         </DashboardCard>
                         <DashboardCard title="Top 10 sets">
                             <p className="text-sm text-gray-600">Total sets owned {getSetsCount(data.cards)} of {data.globalSets.length}</p>
-                            <Treemap cards={data.cards} globalSets={data.globalSets}/>
+                            <Treemap cards={data.cards} globalSets={data.globalSets} theme={theme}/>
                         </DashboardCard>
-                        <DashboardCard title="Strongest cards">
-                        Lorem ipsum
+                        <DashboardCard className="col-span-2" title="Power distribution">
+                            <Scatterplot cards={filteredCards} theme={theme}/>
                         </DashboardCard>
                     </div>
 

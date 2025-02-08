@@ -87,3 +87,17 @@ export function generateDrilldownData(cards: Card[]): {
     return { topLevelData, drilldownData };
 
 }
+
+export function generateScatterplotData(cards: Card[]) {
+    return cards
+        // Only Pokémon have HP & Attacks
+        .filter(card => card.supertype === "Pokémon")
+        .map(card => ({
+            name: card.name,
+            // Convert HP to number
+            hp: parseInt(card.hp || "0"),
+            // Sum of all attacks energy cost
+            energyCost: card.attacks ? card.attacks.reduce((sum, attack) => sum + attack.convertedEnergyCost, 0) : 0,
+            image: card.images?.small || ""
+        }));
+}

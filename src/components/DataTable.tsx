@@ -10,7 +10,7 @@ function DataTable({cards}: {cards: Card[]}) {
    return (
     <table className="w-full mt-4">
         <thead>
-        <tr>
+        <tr className="bg-orange-200">
             <th>Name</th>
             <th>Types</th>
             <th>Supertype</th>
@@ -26,7 +26,7 @@ function DataTable({cards}: {cards: Card[]}) {
         <tbody>
             {
                 cards.map((card: Card) => (
-                    <tr className="odd:bg-gray-100" key={card.id}>
+                    <tr className="odd:bg-orange-100" key={card.id}>
                         <td>{card.name}</td>
                         <td>{card.types?.join(", ")}</td>
                         <td>{card.supertype}</td>

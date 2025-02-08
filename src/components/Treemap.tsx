@@ -8,13 +8,13 @@ import {countCardsBySet} from "../services/utils.ts";
  * This component displays a treemap using ECharts. Based on examples:
  * - https://echarts.apache.org/examples/en/editor.html?c=treemap-simples
  */
-function Treemap({cards, globalSets}: {cards: Card[], globalSets: SetInfo[]}) {
+function Treemap({cards, globalSets, theme}: {cards: Card[], globalSets: SetInfo[], theme?: string | null}) {
     const chartRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!chartRef.current) return;
 
-        const myChart = echarts.init(chartRef.current, "westeros");
+        const myChart = echarts.init(chartRef.current, theme);
         const setsCount = countCardsBySet(cards);
         const chartData = (setsCount.sort((a, b) => b.value - a.value)).slice(0,10);
 
@@ -49,7 +49,7 @@ function Treemap({cards, globalSets}: {cards: Card[], globalSets: SetInfo[]}) {
         };
     }, [cards]);
 
-    return <div ref={chartRef} className="w-full h-64" />;
+    return <div ref={chartRef} className="w-full h-[240px]" />;
 }
 
 export default Treemap

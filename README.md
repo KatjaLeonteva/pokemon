@@ -4,8 +4,8 @@ The dahsboard is aimed to help Ash to explore and understand his Pokémon card c
 
 ## Tech
 - **React + TypeScript + Vite** → provides a fast, minimal, and type-safe setup. React for component-based UI development. TypeScript for type safety and better code maintainability. Vite for fast builds, HMR (Hot Module Replacement), and an optimized ESM-based dev server.
-- **Tailwind CSS** → a utility-first CSS framework that makes styling faster and more maintainable. Enables responsive, reusable, and modern UI styling without writing custom CSS files. Treeshaking removes unused styles, reducing final bundle size.
-- **Echarts** → a data visualization library. Supports interactive charts with smooth animations. Optimized for large datasets, making it ideal for dashboard analytics. Works well with React to dynamically update charts based on data.
+- **Tailwind CSS** → a utility-first CSS framework that makes styling faster and more maintainable. Enables responsive, reusable, and modern UI styling without writing custom CSS files. Treeshaking removes unused styles, reducing final bundle size. 
+- **Echarts** → a data visualization library. Supports interactive charts with smooth animations. Optimized for large datasets, making it ideal for dashboard analytics. Works well with React to dynamically update charts based on data. [Essos theme](https://echarts.apache.org/en/theme-builder.html) for styling.
 
 ## Setup instructions
 
@@ -63,7 +63,7 @@ The dashboard includes following sections:
 📊 Summary → High-level statistics such as total number of cards, duplicates, sets count.  
 📈 Charts → Visual breakdown of collection across different attributes.  
 📅 Table → A detailed sortable, filterable view of cards for in-depth analysis.  
-🔎 Interactions → Apply filters to narrow down the dataset, enable cross-filtering where selections in table dynamically adjust other visualizations.
+🔎 Interactions → Apply filters to narrow down the dataset.
 
 ### Choice of charts
 
@@ -79,18 +79,14 @@ The dashboard includes following sections:
 - (unimplemented) Color coding by collection completeness
 
 3. Identify the strongest cards (HP, Damage, Abilities) vs support vs energy: Scatterplot
+- On hover show card image with attacks and abilities details
+- To analyze card strength, HP should be compared with damage and abilities and categorized into Powerful (high HP + high damage) and Support (utility effects or Trainers).
+But attack values are inconsistent due to multipliers ("10×", "20+"), conditions, or text-based effects.
+Due to time constraints, HP vs. Converted Energy Cost was used instead, but this makes the chart less representative as many items overlap.
 
 4. Legality for tournament play (rule formats) and card rarity - Table
-- Included in 
-- Show full card information on hover or click on the table row.
-
-| Insights                                                                                          | Chart type                       |
-|---------------------------------------------------------------------------------------------------|----------------------------------|
-| Understand the collection’s composition (how many Pokémon, Trainer, and Energy cards)             | Bar chart with drilldown         |
-| Check card distribution across different sets (which sets are most represented in the collection) | Treemap                          |
-| Identify the strongest cards (HP, Damage, Abilities) vs support vs energy                         | Scatterplot (HP vs Attack power) |
-| Legality for tournament play (rule formats) and card rarity                                       | Table with filtering             |
-
+- Filters inside summary section as they also apply to charts
+- (unimplemented) Multi-select in filters
 
 ### Project structure
 Currently, the project is a single-page application with a single route.
@@ -101,7 +97,6 @@ The project follows a modular structure, with components, services, and styles s
 │── /assets          # Local JSON data, images
 │── /components      # UI components (Charts, Tables, Cards)
 │── /services        # API calls, external data fetching and processing
-│── /styles          # Global styles (Tailwind)
 │── App.tsx          # Main App Component
 │── main.tsx         # Entry point
 │── vite.config.ts   # Vite Configuration
@@ -129,7 +124,7 @@ E.g. filter collection by archetype, recommend missing cards, etc.
 - Evolution tracking: identify which cards can evolve into or from others, helping with deck-building and collection progress.
 
 ### Technical features
-- Card search: allow filtering by name, type, HP, rarity, and legality
+- Cross-filtering: selections in table dynamically adjust other visualizations.
 - Responsive design: optimize for mobile and tablet screens to improve usability.
 - Accessibility: improve keyboard navigation and screen reader support.
 - Error handling: display user-friendly messages for failed API calls.
