@@ -38,7 +38,7 @@ function Dashboard() {
     });
 
     // Fetch & register echarts theme
-    fetch('/assets/essos.json')
+    fetch(`${import.meta.env.BASE_URL}assets/essos.json`)
         .then(response => response.json())
         .then(themeJson => {
             echarts.registerTheme("essos", themeJson);
@@ -63,9 +63,9 @@ function Dashboard() {
             <>
         <header className="w-full py-4 text-white">
             <div className="flex justify-between items-center">
-                <h1 className="text-xl font-bold flex items-end"><img src="/assets/logo.svg" alt="Pokémon" className="h-10 mr-2" /> Card Collection</h1>
+                <h1 className="text-xl font-bold flex items-end"><img src={`${import.meta.env.BASE_URL}assets/logo.svg`} alt="Pokémon" className="h-10 mr-2" /> Card Collection</h1>
                 <a href="/" className="flex items-center gap-1">
-                    <img className="w-6 h-6 rounded-full" src="/assets/ash-avatar.jpg" alt="Rounded avatar"/>
+                    <img className="w-6 h-6 rounded-full" src={`${import.meta.env.BASE_URL}assets/ash-avatar.jpg`} alt="Rounded avatar"/>
                     Ash Ketchum
                 </a>
             </div>
