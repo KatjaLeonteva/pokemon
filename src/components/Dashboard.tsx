@@ -54,7 +54,7 @@ function Dashboard() {
 
 
   return (
-    <div className='h-screen flex flex-col font-mono px-4 pb-4 container mx-auto'>
+    <div className='h-screen flex flex-col font-mono px-4 pb-4 mx-auto'>
         {loading ? (
             <div className="flex-1 flex items-center justify-center w-full">
                 <Spinner />

@@ -1,11 +1,11 @@
 # Ash’s Pokémon Card Collection Assignment
 
-The dahsboard is aimed to help Ash to explore and understand his Pokémon card collection. 
+The dashboard is aimed to help Ash to explore and understand his Pokémon card collection. 
 
 ## Tech
 - **React + TypeScript + Vite** → provides a fast, minimal, and type-safe setup. React for component-based UI development. TypeScript for type safety and better code maintainability. Vite for fast builds, HMR (Hot Module Replacement), and an optimized ESM-based dev server.
 - **Tailwind CSS** → a utility-first CSS framework that makes styling faster and more maintainable. Enables responsive, reusable, and modern UI styling without writing custom CSS files. Treeshaking removes unused styles, reducing final bundle size. 
-- **Echarts** → a data visualization library. Supports interactive charts with smooth animations. Optimized for large datasets, making it ideal for dashboard analytics. Works well with React to dynamically update charts based on data. [Essos theme](https://echarts.apache.org/en/theme-builder.html) for styling.
+- **Echarts** → a data visualization library. Supports interactive charts with smooth animations. Optimized for large datasets, making it ideal for dashboard analytics. Works well with React to dynamically update charts based on data. [Essos theme](https://echarts.apache.org/en/theme-builder.html) for styling that features a vibrant yellow palette, reminiscent of Pikachu's iconic color scheme.
 
 ## Setup instructions
 
@@ -13,14 +13,14 @@ The dahsboard is aimed to help Ash to explore and understand his Pokémon card c
 To see the deployed project please visit:  
 🔗 [Live demo](https://github.com/)
 
-### To run project locally
+### To run the project locally
 
 Before starting, ensure you have installed Node.js and npm.
 
 1. Clone the repository
 ```
-git clone <repository-url>
-cd <project-folder>
+git clone https://github.com/KatjaLeonteva/pokemon.git
+cd pokemon
 ```
 
 2. Install dependencies
@@ -47,7 +47,7 @@ The app will be available at http://localhost:5173/
 ### Goals
 A dashboard analyzing Ash's card collection can be useful for multiple purposes depending on what insights we extract from the data.
 Possible use cases are:
-1. Building different types of decks: know which card are available and how they fit into a deck strategy  (e.g. type balance, synergy).
+1. Building different types of decks: know which cards are available and how they fit into a deck strategy  (e.g. type balance, synergy).
 2. Identifying strong cards for competitive play: if Ash wants to play in tournaments he needs to know which cards are powerful and legal.
 3. Collection progress and set completion: if Ash is collecting full sets he needs to know which cards are missing.
 4. Deciding which cards to sell or replace: some cards increase in value and others are not useful for current deck strategy.
@@ -57,26 +57,27 @@ I assume this means he is actively using his collection for gameplay rather than
 Therefore, the primary use cases likely are 1 and 2.
 
 ### Navigating the dashboard
-For this purpose the best type of dashboard is analytical, meaning it is important to see the big picture while also have the ability to explore detailed insights.
+For this purpose, the best type of dashboard is analytical, allowing users to see the big picture while also being able to explore detailed insights.
 
 The dashboard includes following sections:  
 📊 Summary → High-level statistics such as total number of cards, duplicates, sets count.  
-📈 Charts → Visual breakdown of collection across different attributes.  
+📈 Charts → Visual breakdown of collection across different attributes using engaging interactive visualizations.  
 📅 Table → A detailed sortable, filterable view of cards for in-depth analysis.  
-🔎 Interactions → Apply filters to narrow down the dataset.
+🔎 Interactions → Apply filters to dynamically narrow down the dataset.
 
 ### Choice of charts
 
 1. Understand the collection’s composition (how many Pokémon, Trainer, and Energy cards): Bar chart with drilldown
 - Horizontal orientation for better readability of labels
-- On click on Pokémon and Energy bar drill down to types (Grass, Water, etc.)
+- On click on Pokémon and Energy bar chart enables users to drill down from card supertypes to specific types (Grass, Water, etc.)
 - Bars sorted by value, longest bar on the top
+- Removed unnecessary grid lines (data-ink ratio rule)
 
 2. Check card distribution across different sets (which sets are most represented in the collection): Treemap
 - Show only top 10 sets (by number of cards owned) as total amount of sets owned is 121 and chart becomes cluttered
-- Show context in subtitle (10 our of how many? how many total?). Originally this information was in Summary section, but I decided to move it closer to related chart
+- Show context in subtitle (10 sets out of how many? how many exist in total?). Originally this information was in Summary section, but I decided to move it closer to related chart
 - On hover show tooltip with collection name, cards owned and total cards
-- (unimplemented) Color coding by collection completeness
+- (unimplemented) Color coding by collection completeness (sequential palette)
 
 3. Identify the strongest cards (HP, Damage, Abilities) vs support vs energy: Scatterplot
 - On hover show card image with attacks and abilities details
@@ -85,11 +86,11 @@ But attack values are inconsistent due to multipliers ("10×", "20+"), condition
 Due to time constraints, HP vs. Converted Energy Cost was used instead, but this makes the chart less representative as many items overlap.
 
 4. Legality for tournament play (rule formats) and card rarity - Table
-- Filters inside summary section as they also apply to charts
+- Filters apply dynamically to both the table and charts, therefore they are located in Summary section and not next to table
 - (unimplemented) Multi-select in filters
 
 ### Project structure
-Currently, the project is a single-page application with a single route.
+The project is a single-page application with one main route.
 The project follows a modular structure, with components, services, and styles separated for better organization and maintainability.
 
 ```
@@ -103,17 +104,18 @@ The project follows a modular structure, with components, services, and styles s
 ```
 
 1. Get local data (`ash_collection.json`), show loading indicator while data is being retrieved.
-2. Fetch external data (Pokémon TCG API) o enrich local data (e.g., adding sets information). Merge external data with local data before rendering UI.
-3. Compute derived values for charts and tables such as duplicates, set count, etc.
-4. Update charts and tables based on user interactions (filters, selections).
-5. State management is handled by React hooks `useState` and `useEffect`. No external state management (Redux, Zustand, etc.) is used as project complexity is low.
-6. Filtered and processed data is computed in the parent component `Dashboard.tsx` and passed down as props to child components. Calculation logic is kept in separate utility functions to keep components clean.
+2. Fetch external data (Pokémon TCG API) to enrich local data (e.g., adding sets information). Merge external data with local data before rendering UI.
+3. Pre-process dataset: keep only unique cards (by card id) and add column with number of owned cards.
+4. Compute derived values for charts and tables such as cards count, sets count, etc.
+5. Update charts and tables based on user interactions (filters, selections).
+6. State management is handled by React hooks `useState` and `useEffect`. No external state management (Redux, Zustand, etc.) is used as project complexity is low.
+7. Filtered and processed data is computed in the parent component `Dashboard.tsx` and passed down as props to child components. Calculation logic is kept in separate utility functions to keep components clean.
 
 ### Trade-offs
 - Chart readability: more advanced charts (e.g. treemaps, scatterplots) provide deeper insights but may be harder to interpret for casual users.
-- Normally treemap is good for spotting the most and least represented categories quickly: But for this dataset values are very close to each other, making it difficult to distinguish differences between sets. If I had more time I would experiment with other types of visualizations or alternative KPIs describing distribution of cards by set.
+- Normally treemap is good for spotting the most and least represented categories quickly. But for this dataset values are very close to each other, making it difficult to distinguish differences between sets. With more time, I would experiment with alternative visualizations or KPIs to better represent card distribution across sets.
 - Static vs. dynamic data: the dataset is enriched with set data from an external API during initial load. This increases startup time, and an alternative would be asynchronous loading, where charts update progressively. This would improve initial responsiveness but might introduce a loading state for charts.
-- There is no single API endpoint that gives the total number of all existing Pokémon TCG cards. Since Pokémon TCG does not change frequently, I decided to hardcode `globalTotalCards` value based on the latest API data to save time on loading.
+- There is no single API endpoint that gives the total number of existing Pokémon TCG cards. Since Pokémon TCG does not change frequently, I decided to hardcode `globalTotalCards` value based on the latest API data to save time on loading.
 - Currently, the chart components mix data processing and visualization logic in the same file. This means they both prepare the data and render the chart, which works for small projects but can cause issues as the project grows. A better approach would be to separate data processing into a separate file or service, keeping the chart components focused on rendering.
 
 ## Unimplemented features
@@ -127,5 +129,5 @@ E.g. filter collection by archetype, recommend missing cards, etc.
 - Cross-filtering: selections in table dynamically adjust other visualizations.
 - Responsive design: optimize for mobile and tablet screens to improve usability.
 - Accessibility: improve keyboard navigation and screen reader support.
-- Error handling: display user-friendly messages for failed API calls.
+- Error handling: show  user-friendly messages when API call fail.
 
