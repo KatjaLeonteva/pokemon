@@ -3,7 +3,7 @@ import { Card, SetInfo } from './types';
 export async function fetchDashboardData() {
     try {
         // Load local data
-        const localResponse = await fetch('src/assets/ash_collection.json')
+        const localResponse = await fetch('/data/ash_collection.json');
         const localData = await localResponse.json();
 
         // Fetch external Pokémon TCG API data (sets)

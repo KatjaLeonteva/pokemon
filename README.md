@@ -11,7 +11,7 @@ The dashboard is aimed to help Ash to explore and understand his Pokémon card c
 
 ### Open the Dashboard
 To see the deployed project please visit:  
-🔗 [Live demo](https://github.com/)
+🔗 [Live demo](https://katjaleonteva.github.io/pokemon/)
 
 ### To run the project locally
 
@@ -94,6 +94,9 @@ The project is a single-page application with one main route.
 The project follows a modular structure, with components, services, and styles separated for better organization and maintainability.
 
 ```
+/public
+│── /assets          # Images, ECharts theme
+│── /data            # Local JSON data
 /src
 │── /assets          # Local JSON data, images
 │── /components      # UI components (Charts, Tables, Cards)
