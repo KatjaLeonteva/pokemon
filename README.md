@@ -98,7 +98,6 @@ The project follows a modular structure, with components, services, and styles s
 │── /assets          # Images, ECharts theme
 │── /data            # Local JSON data
 /src
-│── /assets          # Local JSON data, images
 │── /components      # UI components (Charts, Tables, Cards)
 │── /services        # API calls, external data fetching and processing
 │── App.tsx          # Main App Component
