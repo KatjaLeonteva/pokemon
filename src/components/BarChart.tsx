@@ -13,7 +13,7 @@ function BarChart({cards, theme}: {cards: Card[]; theme?: string | null}) {
     const chartRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (!chartRef.current) return;
+        if (cards.length === 0 || !chartRef.current) return;
 
         const myChart = echarts.init(chartRef.current, theme);
         const chartData = generateDrilldownData(cards);
@@ -143,7 +143,11 @@ function BarChart({cards, theme}: {cards: Card[]; theme?: string | null}) {
         return () => {
             myChart.dispose();
         };
-    }, [cards]);
+    }, [cards, theme]);
+
+    if (cards.length === 0) {
+        return <span className="flex h-[240px] items-center justify-center">No data</span>;
+    }
 
     return <div ref={chartRef} className="w-full h-[240px]" />;
 }

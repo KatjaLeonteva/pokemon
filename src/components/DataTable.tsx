@@ -7,6 +7,11 @@ const legalitiesAbbr: Record<string, string> = {
 };
 
 function DataTable({cards}: {cards: Card[]}) {
+
+    if (cards.length === 0) {
+        return null;
+    }
+
    return (
     <table className="w-full mt-4">
         <thead>

@@ -12,7 +12,7 @@ function Treemap({cards, globalSets, theme}: {cards: Card[], globalSets: SetInfo
     const chartRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (!chartRef.current) return;
+        if (cards.length === 0 || !chartRef.current) return;
 
         const myChart = echarts.init(chartRef.current, theme);
         const setsCount = countCardsBySet(cards);
@@ -47,9 +47,13 @@ function Treemap({cards, globalSets, theme}: {cards: Card[], globalSets: SetInfo
         return () => {
             myChart.dispose();
         };
-    }, [cards]);
+    }, [cards, theme, globalSets]);
 
-    return <div ref={chartRef} className="w-full h-[240px]" />;
+    if (cards.length === 0) {
+        return <span className="flex h-[240px] items-center justify-center">No data</span>;
+    }
+
+    return <div ref={chartRef} className="w-full h-[240px]"/>;
 }
 
 export default Treemap
